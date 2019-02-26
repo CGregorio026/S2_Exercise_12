@@ -1,5 +1,5 @@
 "use strict";
-
+// stricco mode
 /*
    New Perspectives on HTML5 and CSS3, 7th Edition
    Tutorial 10
@@ -40,6 +40,7 @@ document.getElementById("calendar").innerHTML = createCalendar(thisDay);
 function createCalendar(calDate) {
       var calendarHTML = "<table id='calendar_table'>";
       calendarHTML += calCaption(calDate);
+      calendarHTML += calWeekdayRow();
       calendarHTML += "</table>";
       return calendarHTML;
 }
@@ -58,4 +59,37 @@ function calCaption(calDate) {
       // Write the caption
       return "<caption>" + monthName[thisMonth] + " " + thisYear + "</caption>";
 
+}
+
+// function to write a table row of weekday abbreviations
+function calWeekdayRow() {
+      //array of weekday abbreviations
+      var dayName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var rowHTML = "<tr>";
+
+      // look throught the dayName array
+      for (var i = 0; i < dayName.length; i++) {
+            rowHTML += "<th class='calendar_weekdays'>" + dayName[i] + "</th>";
+      }
+      rowHTML += "</tr>";
+      return rowHTML;
+}
+
+// function to calculate the number of days in the month
+function daysInMonth(calDate) {
+      // array of days in each month
+      var dayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+      // extract the four digit year and month value
+      var thisYear = calDate.getFullYear();
+      var thisMonth = calDate.getMonth();
+
+
+      // revise days in february for leap years
+      if (thisYear % 4 === 0) {
+            dayCount[1] = 29
+      }
+
+      //return the number of days for the current month
+      return dayCount[thisMonth];
 }
